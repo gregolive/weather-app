@@ -97,6 +97,28 @@ h1 {
 
 .results-section {
   background-color: white;
+  padding: 2rem calc((100vw - min(85vw, 60rem)) / 2);
+}
+
+.results-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1rem;
+}
+
+.results-info {
+  margin: 0.5rem 0 1rem;
+}
+
+.results-card {
+  border: 1px solid var(--silver);
+  border-radius: 0.25rem;
+  box-shadow: 5px 5px 10px var(--silver);
+  padding: 1rem;
+}
+
+.city {
+  margin: 0;
 }
 
 footer {
