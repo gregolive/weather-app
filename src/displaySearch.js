@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import {
-  kelvinToCelcius, meterToKm, degToCompass, convertTZ, capitalize,
+  kelvinToCelcius, meterToKm, degToCompass, convertTZ, convertToLocalTZ, capitalize,
 } from './convert';
 
 const updateResultsInfo = (query, results) => {
@@ -70,14 +70,13 @@ const dataPrimary = (results) => {
 
 const dataSecondary = (results) => {
   const secondary = document.createElement('div');
-  
   secondary.className = 'data-secondary';
   secondary.appendChild(weatherSpan(`${results.wind.speed} ${degToCompass(results.wind.deg)}`, 'fa-solid fa-wind'));
   secondary.appendChild(weatherSpan(`${results.main.pressure}hPa`, 'fa-solid fa-gauge-high'));
   secondary.appendChild(weatherSpan(`Humidity: ${results.main.humidity}%`));
   secondary.appendChild(weatherSpan(`Visibility: ${meterToKm(results.visibility)}`));
-  //secondary.appendChild(weatherSpan(`${format(date, 'LLL d, yyyy')}`));
-  //secondary.appendChild(weatherSpan(`${format(date, 'h:mm a')}`));
+  secondary.appendChild(weatherSpan(`Sunrise: ${format(convertToLocalTZ(results.sys.sunrise, results.timezone), 'h:mma')}`));
+  secondary.appendChild(weatherSpan(`Sunset: ${format(convertToLocalTZ(results.sys.sunset, results.timezone), 'h:mma')}`));
 
   return secondary;
 };

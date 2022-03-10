@@ -9,12 +9,17 @@ const degToCompass = (deg) => {
 };
 
 const convertTZ = (zoneOffset) => {
-  const userOffset = new Date().getTimezoneOffset() * (60 * 1000);
-  return new Date(new Date().getTime() + userOffset + (zoneOffset * 1000));
+  const userOffset = new Date().getTimezoneOffset() * 60;
+  return new Date(new Date().getTime() + (userOffset + zoneOffset) * 1000);
+};
+
+const convertToLocalTZ = (time, zoneOffset) => {
+  const userOffset = new Date().getTimezoneOffset() * 60;
+  return new Date((time + userOffset + zoneOffset) * 1000);
 };
 
 const capitalize = (sentence) => sentence.charAt(0).toUpperCase() + sentence.slice(1);
 
 export {
-  kelvinToCelcius, meterToKm, degToCompass, convertTZ, capitalize,
+  kelvinToCelcius, meterToKm, degToCompass, convertTZ, convertToLocalTZ, capitalize,
 };
