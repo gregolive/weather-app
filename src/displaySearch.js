@@ -1,17 +1,26 @@
+import { format } from 'date-fns';
 import {
-  kelvinToCelcius, meterToKm, degToCompass, capitalize,
+  kelvinToCelcius, meterToKm, degToCompass, convertTZ, capitalize,
 } from './convert';
 
 const updateResultsInfo = (query, results) => {
   const info = document.querySelector('.results-info');
   if (results.cod === '404' || query === '') {
-    info.textContent = `0 search results for ${query}`;
+    info.textContent = `0 search results for '${query}'`;
   } else {
-    info.textContent = `1 search result for ${query}`;
+    info.textContent = `1 search result for '${query}'`;
   }
 };
 
-const cardHeading = (city, country) => {
+const cityDate = (date) => {
+  const small = document.createElement('small');
+  small.className = 'date';
+  small.textContent = format(date, 'LLL d, h:mma');
+
+  return small;
+};
+
+const cityName = (city, country) => {
   const heading = document.createElement('h2');
   heading.textContent = `${city}, ${country}`;
 
@@ -61,11 +70,14 @@ const dataPrimary = (results) => {
 
 const dataSecondary = (results) => {
   const secondary = document.createElement('div');
+  
   secondary.className = 'data-secondary';
   secondary.appendChild(weatherSpan(`${results.wind.speed} ${degToCompass(results.wind.deg)}`, 'fa-solid fa-wind'));
   secondary.appendChild(weatherSpan(`${results.main.pressure}hPa`, 'fa-solid fa-gauge-high'));
   secondary.appendChild(weatherSpan(`Humidity: ${results.main.humidity}%`));
   secondary.appendChild(weatherSpan(`Visibility: ${meterToKm(results.visibility)}`));
+  //secondary.appendChild(weatherSpan(`${format(date, 'LLL d, yyyy')}`));
+  //secondary.appendChild(weatherSpan(`${format(date, 'h:mm a')}`));
 
   return secondary;
 };
@@ -82,7 +94,8 @@ const weatherData = (results) => {
 const displayCard = (results) => {
   const card = document.createElement('article');
   card.className = 'results-card';
-  card.appendChild(cardHeading(results.name, results.sys.country));
+  card.appendChild(cityDate(convertTZ(results.timezone)));
+  card.appendChild(cityName(results.name, results.sys.country));
   card.appendChild(weatherDescription(results.main.feels_like, results.weather[0].description));
   card.appendChild(weatherData(results));
 

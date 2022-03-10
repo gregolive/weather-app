@@ -8,8 +8,13 @@ const degToCompass = (deg) => {
   return arr[(val % 16)];
 };
 
+const convertTZ = (zoneOffset) => {
+  const userOffset = new Date().getTimezoneOffset() * (60 * 1000);
+  return new Date(new Date().getTime() + userOffset + (zoneOffset * 1000));
+};
+
 const capitalize = (sentence) => sentence.charAt(0).toUpperCase() + sentence.slice(1);
 
 export {
-  kelvinToCelcius, meterToKm, degToCompass, capitalize,
+  kelvinToCelcius, meterToKm, degToCompass, convertTZ, capitalize,
 };

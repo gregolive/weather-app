@@ -125,6 +125,12 @@ h1 {
   padding: 1rem;
 }
 
+.date {
+  color: var(--red);
+  font-size: 0.75rem;
+  letter-spacing: -1px;
+}
+
 h2 {
   margin: 0;
 }
