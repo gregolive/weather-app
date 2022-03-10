@@ -2,8 +2,8 @@
 
 :root {
   --silver: #e8e8e8;
-  --light-gray: #bfbfbf;
-  --gray: #96939b;
+  --light-gray: #96939b;
+  --gray: #6f6c75;
   --light-red: #f9b5ac;
   --red: #e94c49;
 }
@@ -107,6 +107,8 @@ h1 {
 }
 
 .results-info {
+  color: var(--gray);
+  font-style: italic;
   margin: 0.5rem 0 1rem;
 }
 
@@ -117,9 +119,17 @@ h1 {
   padding: 1rem;
 }
 
-.city {
+h2 {
   margin: 0;
 }
+
+.weather-description {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+
+
 
 footer {
   background-color: var(--silver);
