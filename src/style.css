@@ -153,8 +153,32 @@ h2 {
   margin-right: 0.5rem;
 }
 
-.weather-icon {
-  color: var(--light-gray);
+.icon-yellow {
+  color: gold;
+}
+
+.icon-light-yellow {
+  color: #ffdc85;
+}
+
+.icon-gold {
+  color: goldenrod;
+}
+
+.icon-light-blue {
+  color: lightskyblue;
+}
+
+.icon-blue {
+  color: steelblue;
+}
+
+.icon-gray {
+  color: lightsteelblue;
+}
+
+.icon-dark-gray {
+  color: dimgray;
 }
 
 .temperature {

@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import {
-  kelvinToCelcius, meterToKm, degToCompass, convertTZ, convertToLocalTZ, capitalize,
+  kelvinToCelcius, meterToKm, degToCompass, convertTZ, convertToLocalTZ, weatherToIcon, capitalize,
 } from './convert';
 
 const updateResultsInfo = (query, results) => {
@@ -62,7 +62,7 @@ const dataPrimary = (results) => {
 
   const primary = document.createElement('div');
   primary.className = 'data-primary';
-  primary.appendChild(weatherIcon('fa-solid fa-cloud'));
+  primary.appendChild(weatherIcon(weatherToIcon(results.weather[0].icon)));
   primary.appendChild(temp);
 
   return primary;
@@ -102,10 +102,10 @@ const displayCard = (results) => {
 };
 
 const displaySearch = (query, results) => {
-  console.log(results);
+  const wrapper = document.querySelector('.results-wrapper');
+  wrapper.textContent = '';
   updateResultsInfo(query, results);
   if (results.cod !== '404') {
-    const wrapper = document.querySelector('.results-wrapper');
     wrapper.appendChild(displayCard(results));
   }
 };
