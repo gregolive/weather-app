@@ -27,9 +27,9 @@ const cityName = (city, country) => {
   return heading;
 };
 
-const weatherDesc = (temperature, weather, tempF) => {
+const weatherDesc = (temperature, weather, toggle) => {
   const description = document.createElement('p');
-  const feels = (tempF === true) ? kelvinToF(temperature) : kelvinToC(temperature);
+  const feels = (toggle === true) ? kelvinToF(temperature) : kelvinToC(temperature);
 
   description.className = 'weather-description';
   description.textContent = `Feels like ${feels}. ${capitalize(weather)}.`;
@@ -58,8 +58,8 @@ const weatherSpan = (data, iconClass) => {
   return span;
 };
 
-const dataPrimary = (results, tempF) => {
-  let temp = (tempF === true) ? kelvinToF(results.main.temp) : kelvinToC(results.main.temp);
+const dataPrimary = (results, toggle) => {
+  let temp = (toggle === true) ? kelvinToF(results.main.temp) : kelvinToC(results.main.temp);
   temp = weatherSpan(temp);
   temp.className = 'temperature';
 
@@ -84,10 +84,10 @@ const dataSecondary = (results) => {
   return secondary;
 };
 
-const weatherData = (results, tempF) => {
+const weatherData = (results, toggle) => {
   const data = document.createElement('div');
   data.className = 'weather-data';
-  data.appendChild(dataPrimary(results, tempF));
+  data.appendChild(dataPrimary(results, toggle));
   data.appendChild(dataSecondary(results));
 
   return data;
@@ -95,13 +95,13 @@ const weatherData = (results, tempF) => {
 
 const displayCard = (results) => {
   const card = document.createElement('article');
-  const tempF = document.querySelector('.unit-slider').checked;
+  const toggle = document.querySelector('.unit-slider').checked;
 
   card.className = 'results-card';
   card.appendChild(cityDate(convertTZ(results.timezone)));
   card.appendChild(cityName(results.name, results.sys.country));
-  card.appendChild(weatherDesc(results.main.feels_like, results.weather[0].description, tempF));
-  card.appendChild(weatherData(results, tempF));
+  card.appendChild(weatherDesc(results.main.feels_like, results.weather[0].description, toggle));
+  card.appendChild(weatherData(results, toggle));
 
   return card;
 };
