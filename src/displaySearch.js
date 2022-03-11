@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import {
-  kelvinToCelcius, meterToKm, degToCompass, convertTZ, convertToLocalTZ, weatherToIcon, capitalize,
+  kelvinToC, kelvinToF, meterToKm, degToCompass, convertTZ, localTZ, weatherToIcon, capitalize,
 } from './convert';
 
 const updateResultsInfo = (query, results) => {
@@ -27,10 +27,12 @@ const cityName = (city, country) => {
   return heading;
 };
 
-const weatherDescription = (temperature, weather) => {
+const weatherDesc = (temperature, weather, tempF) => {
   const description = document.createElement('p');
+  const feels = (tempF === true) ? kelvinToF(temperature) : kelvinToC(temperature);
+
   description.className = 'weather-description';
-  description.textContent = `Feels like ${kelvinToCelcius(temperature)}. ${capitalize(weather)}.`;
+  description.textContent = `Feels like ${feels}. ${capitalize(weather)}.`;
 
   return description;
 };
@@ -56,8 +58,9 @@ const weatherSpan = (data, iconClass) => {
   return span;
 };
 
-const dataPrimary = (results) => {
-  const temp = weatherSpan(kelvinToCelcius(results.main.temp));
+const dataPrimary = (results, tempF) => {
+  let temp = (tempF === true) ? kelvinToF(results.main.temp) : kelvinToC(results.main.temp);
+  temp = weatherSpan(temp);
   temp.className = 'temperature';
 
   const primary = document.createElement('div');
@@ -75,16 +78,16 @@ const dataSecondary = (results) => {
   secondary.appendChild(weatherSpan(`${results.main.pressure}hPa`, 'fa-solid fa-gauge-high'));
   secondary.appendChild(weatherSpan(`Humidity: ${results.main.humidity}%`));
   secondary.appendChild(weatherSpan(`Visibility: ${meterToKm(results.visibility)}`));
-  secondary.appendChild(weatherSpan(`Sunrise: ${format(convertToLocalTZ(results.sys.sunrise, results.timezone), 'h:mma')}`));
-  secondary.appendChild(weatherSpan(`Sunset: ${format(convertToLocalTZ(results.sys.sunset, results.timezone), 'h:mma')}`));
+  secondary.appendChild(weatherSpan(`Sunrise: ${format(localTZ(results.sys.sunrise, results.timezone), 'h:mma')}`));
+  secondary.appendChild(weatherSpan(`Sunset: ${format(localTZ(results.sys.sunset, results.timezone), 'h:mma')}`));
 
   return secondary;
 };
 
-const weatherData = (results) => {
+const weatherData = (results, tempF) => {
   const data = document.createElement('div');
   data.className = 'weather-data';
-  data.appendChild(dataPrimary(results));
+  data.appendChild(dataPrimary(results, tempF));
   data.appendChild(dataSecondary(results));
 
   return data;
@@ -92,11 +95,13 @@ const weatherData = (results) => {
 
 const displayCard = (results) => {
   const card = document.createElement('article');
+  const tempF = document.querySelector('.unit-slider').checked;
+
   card.className = 'results-card';
   card.appendChild(cityDate(convertTZ(results.timezone)));
   card.appendChild(cityName(results.name, results.sys.country));
-  card.appendChild(weatherDescription(results.main.feels_like, results.weather[0].description));
-  card.appendChild(weatherData(results));
+  card.appendChild(weatherDesc(results.main.feels_like, results.weather[0].description, tempF));
+  card.appendChild(weatherData(results, tempF));
 
   return card;
 };

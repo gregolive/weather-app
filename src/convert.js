@@ -1,4 +1,6 @@
-const kelvinToCelcius = (tempK) => `${Math.round(tempK - 273.15)}°C`;
+const kelvinToC = (tempK) => `${Math.round(tempK - 273.15)}°C`;
+
+const kelvinToF = (tempK) => `${Math.round((tempK - 273.15) * (9 / 5) + 32)}°F`;
 
 const meterToKm = (meter) => `${(meter / 1000).toFixed(1)}km`;
 
@@ -13,7 +15,7 @@ const convertTZ = (zoneOffset) => {
   return new Date(new Date().getTime() + (userOffset + zoneOffset) * 1000);
 };
 
-const convertToLocalTZ = (time, zoneOffset) => {
+const localTZ = (time, zoneOffset) => {
   const userOffset = new Date().getTimezoneOffset() * 60;
   return new Date((time + userOffset + zoneOffset) * 1000);
 };
@@ -52,5 +54,5 @@ const weatherToIcon = (iconCode) => {
 const capitalize = (sentence) => sentence.charAt(0).toUpperCase() + sentence.slice(1);
 
 export {
-  kelvinToCelcius, meterToKm, degToCompass, convertTZ, convertToLocalTZ, weatherToIcon, capitalize,
+  kelvinToC, kelvinToF, meterToKm, degToCompass, convertTZ, localTZ, weatherToIcon, capitalize,
 };
