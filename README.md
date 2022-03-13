@@ -10,6 +10,7 @@ Search for realtime weather info in your city.
 - A toggle in the navbar allows the user to display temperatures in either Celcius or Fahrenheit
 - Fetch weather information via the Openweathermap API
 - Javascript's <code>async</code> and <code>await</code> Promise keyword's were alongside the <code>fetch</code> function to asynchronously obtain the weather data
+- Display gif of cat banging keyboard while weather data loads
 - Display location's name, current local time, temperature, feels like temperature, weather (clear, scattered clouds, heavy rain, etc.), weather icon, wind (speed and direction), pressure, humidity, visibility, and local sunrise and sunset times
 - Weather icons come via fontawesome's icon pack and the colors change depending on weather and times of day (day or night)
 
