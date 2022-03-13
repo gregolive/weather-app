@@ -178,6 +178,7 @@ h1 {
 .results-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  justify-items: center;
   gap: 1rem;
 }
 
@@ -191,6 +192,8 @@ h1 {
   border: 1px solid var(--silver);
   border-radius: 0.25rem;
   box-shadow: 5px 5px 10px var(--silver);
+  box-sizing: border-box;
+  width: 100%;
   padding: 1rem;
 }
 
